@@ -24,7 +24,7 @@
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/tarunkumar-sys/manga_reader.git
+   git clone https://github.com/jiddi222/Manage_Reader_Manage_Reader.git
    cd manga_reader
    ```
 
