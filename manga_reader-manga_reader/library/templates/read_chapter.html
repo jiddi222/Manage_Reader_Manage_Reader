@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold">Chapter {{ chapter.number }}: {{ chapter.title }}</h3>
+    <div>
+      <a href="{% url 'book_detail' book.id %}" class="btn btn-secondary me-2"
+        >Back to Book</a
+      >
+      {% if prev_chapter %}
+      <a
+        href="{% url 'read_chapter' book.id prev_chapter.id %}"
+        class="btn btn-outline-light"
+        >&laquo; Prev</a
+      >
+      {% endif %} {% if next_chapter %}
+      <a
+        href="{% url 'read_chapter' book.id next_chapter.id %}"
+        class="btn btn-outline-light"
+        >Next &raquo;</a
+      >
+      {% endif %}
+    </div>
+  </div>
+  <div
+    class="bg-dark rounded shadow p-2 mb-4"
+    style="max-height: 85vh; overflow-y: auto"
+  >
+    {% if chapter.images.all %} {% for img in chapter.images.all %}
+    <img
+      src="{{ img.image.url }}"
+      class="img-fluid d-block mx-auto mb-3"
+      style="max-width: 100%; max-height: 80vh; box-shadow: 0 0 10px #222"
+    />
+    {% endfor %} {% elif chapter.pdf %}
+    <iframe
+      src="{{ chapter.pdf.url }}"
+      width="100%"
+      height="800px"
+      style="border: none; background: #222; display: block; margin: auto"
+      allowfullscreen
+    ></iframe>
+    <div class="text-center text-secondary small mt-2">
+      If the PDF is not visible,
+      <a href="{{ chapter.pdf.url }}" target="_blank" class="text-info"
+        >click here to open it in a new tab</a
+      >.
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+      No content available for this chapter.
+    </div>
+    {% endif %}
+  </div>
+  <div class="d-flex justify-content-between">
+    {% if prev_chapter %}
+    <a
+      href="{% url 'read_chapter' book.id prev_chapter.id %}"
+      class="btn btn-outline-light"
+      >&laquo; Previous Chapter</a
+    >
+    {% endif %} {% if next_chapter %}
+    <a
+      href="{% url 'read_chapter' book.id next_chapter.id %}"
+      class="btn btn-outline-light ms-auto"
+      >Next Chapter &raquo;</a
+    >
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

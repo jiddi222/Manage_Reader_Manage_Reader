@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row mb-4">
+  <!-- Book Cover -->
+  <div class="col-md-4 d-flex align-items-start justify-content-center">
+    {% if book.cover_image %}
+    <img
+      src="{{ book.cover_image.url }}"
+      alt="{{ book.title }}"
+      class="img-fluid rounded shadow"
+      style="max-height: 350px"
+    />
+    {% else %}
+    <div
+      class="bg-secondary rounded d-flex align-items-center justify-content-center"
+      style="width: 220px; height: 320px"
+    >
+      <span class="text-light">No Cover</span>
+    </div>
+    {% endif %}
+  </div>
+  <!-- Book Info -->
+  <div class="col-md-8">
+    <h2 class="fw-bold">{{ book.title }}</h2>
+    <p class="mb-1"><strong>Author:</strong> {{ book.author }}</p>
+    <p class="mb-3">{{ book.description }}</p>
+    {% if user.is_staff %}
+    <a href="{% url 'add_chapter' book.id %}" class="btn btn-primary mb-3"
+      >Add Chapter</a
+    >
+    {% endif %}
+  </div>
+</div>
+
+<!-- Chapters Tab -->
+<div class="card bg-dark text-white shadow">
+  <div class="card-header">
+    <h5 class="fw-bold">Chapters</h5>
+  </div>
+  <div class="card-body">
+    {% if book.chapters.all %}
+    <ul class="list-group list-group-flush">
+      {% for chapter in book.chapters.all %}
+      <li class="list-group-item bg-dark text-white">
+        <a
+          href="{% url 'read_chapter' book.id chapter.id %}"
+          class="text-decoration-none text-info"
+        >
+          Chapter {{ chapter.number }}: {{ chapter.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted">No chapters available.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

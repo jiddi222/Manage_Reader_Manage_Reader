@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh">
+  <div class="card shadow-lg p-4 bg-dark text-white" style="min-width: 350px; max-width: 600px; width: 100%">
+    <h2 class="mb-4 text-center fw-bold">Add Chapter</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="mb-3">
+        {{ form.number.label_tag }} {{ form.number }}
+      </div>
+      <div class="mb-3">
+        {{ form.title.label_tag }} {{ form.title }}
+      </div>
+      <div class="mb-3">
+        <label>Upload Images (multiple):</label>
+        <input type="file" name="images" multiple class="form-control" accept="image/*">
+      </div>
+      <div class="mb-3">
+        <label>Or Upload PDF:</label>
+        {{ form.pdf }}
+      </div>
+      <button type="submit" class="btn btn-success w-100 fw-bold">Add Chapter</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
